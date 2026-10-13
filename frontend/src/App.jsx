@@ -25,16 +25,15 @@ function App() {
 
   const renderContent = () => {
     switch(view){
-      case 'project':
-        return <ListaProjetos onEditProject={handleEditProject} />;
-      case 'form':
+      case 'form': 
         return <ProjectForm
           projeto={selectedProject}
           onSave={handleSave}
           onCancel={handleCancel}
         /> ;
+      case 'list':
       default:
-        return <ListaProjetos/>;
+        return <ListaProjetos onEditProject={handleEditProject} />;
     }
 
   }

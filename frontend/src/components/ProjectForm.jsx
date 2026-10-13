@@ -8,10 +8,10 @@ const ProjectForm = ({ projeto, onSave, onCancel }) => {
     const [errors, setErrors] = useState({});
     const [loading, setLoading] = useState(false);
     const handleChange = (e) => {
-        const { name, value, type, checked } = e.target;
+        const { name, value } = e.target;
         setFormData(prev => ({
             ...prev,
-            [name]: type === 'checkbox' ? checked : value
+            [name]: value
         }));
     };
     const handleSubmit = async (e) => {
@@ -23,9 +23,7 @@ const ProjectForm = ({ projeto, onSave, onCancel }) => {
                 await projetoService.updateProject(projeto.id, formData);
             } 
             else {
-                await projetoService.createProject({
-                    ...formData,
-                });
+                await projetoService.createProject(formData);
             }
             onSave();
         } catch (err) {
