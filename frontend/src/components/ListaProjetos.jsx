@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { projetoService } from '../services/projetoService'; 
 
-function ListaProjetos({onEditProject}) {
+function ListaProjetos({onEditProject, onViewTasks}) {
   const [projetos, setProjetos] = useState([]);
   const [loading, setLoading] = useState(true);
   const [erro, setErro] = useState(null);
@@ -54,6 +54,10 @@ function ListaProjetos({onEditProject}) {
                 <button onClick={() => handleDelete(projeto.id)} className="px-3 py-1 bg-red-600 text-white rounded hover:bg-red-700 text-sm">
                   Excluir
                 </button>
+                <button 
+                  onClick={() => onViewTasks(projeto)}
+                  className="px-3 py-1 bg-blue-600 text-white rounded text-sm hover:bg-blue-700"
+                >Tarefas</button>
               </div> 
             </li>
           ))}

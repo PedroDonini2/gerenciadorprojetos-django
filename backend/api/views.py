@@ -1,6 +1,8 @@
 from rest_framework import generics, viewsets, permissions
 from .models import User, Projeto, Tarefa
 from .serializers import UserSerializer, ProjetoSerializer, TarefaSerializer
+from rest_framework.decorators import action
+from rest_framework.response import Response
 
 class UserViewSet(viewsets.ModelViewSet):
     queryset = User.objects.all()
@@ -25,6 +27,15 @@ class ProjetoViewSet(viewsets.ModelViewSet):
         if user.username == 'admin':
             return Projeto.objects.all()
         return Projeto.objects.filter(proprietario=user)
+    
+    @action(methods=['get'], detail= True, permission_classes=[permissions.IsAuthenticated])
+    def tarefas(self,request,pk = None):
+        projeto = self.get_object()
+
+        tarefas = projeto.tarefa_projeto.all()
+        serializer = TarefaSerializer(tarefas, many=True)
+
+        return Response(serializer.data)
 
 class TarefaViewSet(viewsets.ModelViewSet):
     queryset = Tarefa.objects.all()
@@ -33,4 +44,6 @@ class TarefaViewSet(viewsets.ModelViewSet):
 
     def get_queryset(self):
         return Tarefa.objects.all()
+    
+
 

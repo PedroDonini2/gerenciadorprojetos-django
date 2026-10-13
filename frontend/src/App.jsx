@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import ListaProjetos from './components/ListaProjetos';
 import ProjectForm from './components/ProjectForm';
+import ListaTarefas from './components/ListaTarefas';
 
 function App() {
   const [view, setView] = useState('list');
@@ -14,6 +15,18 @@ function App() {
   const handleEditProject = (project) => {
     setSelectedProject(project) ;
     setView('form') ;
+  }
+  
+  //WIP
+  /*
+  const handleCreateTask = () => {
+    setSelectedTask(null);
+    setView('form');
+  }*/
+
+  const handleViewTasks = (project) => {
+    setSelectedProject(project);
+    setView('tarefas');
   }
 
   const handleSave = () => {
@@ -31,11 +44,18 @@ function App() {
           onSave={handleSave}
           onCancel={handleCancel}
         /> ;
+      case 'tarefas':
+        return <ListaTarefas
+          projeto = {selectedProject} 
+          onBack ={() => setView('list')}
+        /> ;
       case 'list':
       default:
-        return <ListaProjetos onEditProject={handleEditProject} />;
+        return <ListaProjetos 
+        onEditProject={handleEditProject}
+        onViewTasks={handleViewTasks}
+        />;
     }
-
   }
 
   return (

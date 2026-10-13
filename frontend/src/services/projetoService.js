@@ -6,4 +6,7 @@ export const projetoService = {
  createProject: (projectData) => api.post('/projetos/', projectData),
  updateProject: (id, projectData) => api.put(`/projetos/${id}/`, projectData),
  deleteProject: (id) => api.delete(`/projetos/${id}/`),
+
+ // Rota para buscar as tarefas de um projeto específico
+ getProjectTasks: (id) => api.get(`/projetos/${id}/tarefas/`),
 };
