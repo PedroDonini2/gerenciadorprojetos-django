@@ -53,77 +53,76 @@ const TaskForm = ({ tarefa, onSave, onCancel }) => {
         }
     };
     return (
-        <div className="max-w-2xl mx-auto p-6 bg-white rounded-lg shadow-md">
-            <h2 className="text-xl font-bold mb-6">
-                {tarefa ? 'Editar Tarefa' : 'Criar Tarefa'}
+        <div className="max-w-xl mx-auto bg-white rounded-2xl border border-slate-200 shadow-xs p-8">
+            <h2 className="text-xl font-bold text-slate-900 mb-6">
+                {tarefa ? 'Editar Tarefa' : 'Criar Nova Tarefa'}
             </h2>
-            <form onSubmit={handleSubmit} className="space-y-4">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    
-                    {/* Descrição da Tarefa */}
-                    <div>
-                        <label className="block text-sm font-medium text-gray-700">Descrição</label>
-                        <input
-                            type="text"
-                            name="descricao"
-                            value={formData.descricao}
-                            onChange={handleChange}
-                            className="mt-1 block w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-blue-500 focus:border-blue-500"
-                        />
-                        {errors.descricao && <p className="text-red-500 text-sm">{errors.descricao}</p>}
-                    </div>
-                    
-                    {/* Seletor de Projeto */}
-                    <div>
-                        <label className="block text-sm font-medium text-gray-700">Projeto Atribuído</label>
-                        <select
-                            name="projeto_atribuido"
-                            value={formData.projeto_atribuido}
-                            onChange={handleChange}
-                            className="mt-1 block w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-blue-500 focus:border-blue-500"
-                        >
-                            <option value="">Selecione um projeto...</option>
-                            {projetos.map((projeto) => (
-                                <option key={projeto.id} value={projeto.id}>
-                                    {projeto.titulo}
-                                </option>
-                            ))}
-                        </select>
-                        {errors.projeto_atribuido && <p className="text-red-500 text-sm">{errors.projeto_atribuido}</p>}
-                    </div>
-
-                    {/* Seletor de Prioridade */}
-                    <div>
-                        <label className="block text-sm font-medium text-gray-700">Prioridade</label>
-                        <select
-                            name="prioridade"
-                            value={formData.prioridade}
-                            onChange={handleChange}
-                            className="mt-1 block w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-blue-500 focus:border-blue-500"
-                        >
-                            <option value="Alta">Alta</option>
-                            <option value="Média">Média</option>
-                            <option value="Baixa">Baixa</option>
-                        </select>
-                        {errors.prioridade && <p className="text-red-500 text-sm">{errors.prioridade}</p>}
-                    </div>
-
+            
+            <form onSubmit={handleSubmit} className="space-y-5">
+                {/* Descrição */}
+                <div>
+                    <label className="block text-sm font-semibold text-slate-700 mb-1.5">Descrição da Tarefa</label>
+                    <input
+                        type="text"
+                        name="descricao"
+                        placeholder="Ex: Configurar autenticação JWT"
+                        value={formData.descricao}
+                        onChange={handleChange}
+                        className="w-full border border-slate-300 rounded-lg px-3.5 py-2.5 text-slate-800 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-all text-sm"
+                    />
+                    {errors.descricao && <p className="text-rose-600 text-xs mt-1.5">{errors.descricao}</p>}
                 </div>
                 
-                <div className="flex justify-end space-x-4 pt-4">
+                {/* Seletor de Projeto */}
+                <div>
+                    <label className="block text-sm font-semibold text-slate-700 mb-1.5">Projeto Atribuído</label>
+                    <select
+                        name="projeto_atribuido"
+                        value={formData.projeto_atribuido}
+                        onChange={handleChange}
+                        className="w-full border border-slate-300 rounded-lg px-3.5 py-2.5 text-slate-800 bg-white focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-all text-sm"
+                    >
+                        <option value="">Selecione um projeto...</option>
+                        {projetos.map((projeto) => (
+                            <option key={projeto.id} value={projeto.id}>
+                                {projeto.titulo}
+                            </option>
+                        ))}
+                    </select>
+                    {errors.projeto_atribuido && <p className="text-rose-600 text-xs mt-1.5">{errors.projeto_atribuido}</p>}
+                </div>
+
+                {/* Seletor de Prioridade */}
+                <div>
+                    <label className="block text-sm font-semibold text-slate-700 mb-1.5">Prioridade</label>
+                    <select
+                        name="prioridade"
+                        value={formData.prioridade}
+                        onChange={handleChange}
+                        className="w-full border border-slate-300 rounded-lg px-3.5 py-2.5 text-slate-800 bg-white focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-all text-sm"
+                    >
+                        <option value="Alta">Alta</option>
+                        <option value="Média">Média</option>
+                        <option value="Baixa">Baixa</option>
+                    </select>
+                    {errors.prioridade && <p className="text-rose-600 text-xs mt-1.5">{errors.prioridade}</p>}
+                </div>
+
+                {/* Botões */}
+                <div className="flex justify-end space-x-3 pt-4 border-t border-slate-100">
                     <button
                         type="button"
                         onClick={onCancel}
-                        className="px-4 py-2 border border-gray-300 rounded-md text-gray-700 hover:bg-gray-50"
+                        className="px-4 py-2.5 border border-slate-300 rounded-lg text-slate-700 font-medium hover:bg-slate-50 transition-colors text-sm"
                     >
                         Cancelar
                     </button>
                     <button
                         type="submit"
                         disabled={loading}
-                        className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 disabled:opacity-50"
+                        className="px-5 py-2.5 bg-indigo-600 text-white font-medium rounded-lg hover:bg-indigo-700 disabled:opacity-50 shadow-sm transition-colors text-sm"
                     >
-                        {loading ? 'Salvando...' : 'Salvar'}
+                        {loading ? 'Salvando...' : 'Salvar Tarefa'}
                     </button>
                 </div>
             </form>

@@ -35,44 +35,43 @@ const ProjectForm = ({ projeto, onSave, onCancel }) => {
         }
     };
     return (
-        <div className="max-w-2xl mx-auto p-6 bg-white rounded-lg shadow-md">
-            <h2 className="text-xl font-bold mb-6">
-                {projeto ? 'Editar Projeto' : 'Criar Projeto'}
+        <div className="max-w-xl mx-auto bg-white rounded-2xl border border-slate-200 shadow-xs p-8">
+            <h2 className="text-xl font-bold text-slate-900 mb-6">
+                {projeto ? 'Editar Projeto' : 'Criar Novo Projeto'}
             </h2>
-        <form onSubmit={handleSubmit} className="space-y-4">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div>
-                <label className="block text-sm font-medium text-gray-700">Projeto</label>
-        <input
-    type="text"
-    name="titulo"
-    value={formData.titulo}
-    onChange={handleChange}
-    className="mt-1 block w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ringblue-500 focus:border-blue-500"
-    />
-    {errors.titulo && <p className="text-red-500 text-sm">{errors.titulo}</p>}
-    </div>
-    
-    </div>
-    
-    <div className="flex justify-end space-x-4 pt-4">
-    <button
-    type="button"
-    onClick={onCancel}
-    className="px-4 py-2 border border-gray-300 rounded-md text-gray-700 hover:bg-gray-50"
-    >
-    Cancelar
-    </button>
-    <button
-    type="submit"
-    disabled={loading}
-    className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 disabled:opacity-50"
-    >
-    {loading ? 'Salvando...' : 'Salvar'}
-    </button>
-    </div>
-    </form>
-    </div>
+            
+            <form onSubmit={handleSubmit} className="space-y-5">
+                <div>
+                    <label className="block text-sm font-semibold text-slate-700 mb-1.5">Título do Projeto</label>
+                    <input
+                        type="text"
+                        name="titulo"
+                        placeholder="Ex: Redesign do App Mobile"
+                        value={formData.titulo}
+                        onChange={handleChange}
+                        className="w-full border border-slate-300 rounded-lg px-3.5 py-2.5 text-slate-800 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-all text-sm"
+                    />
+                    {errors.titulo && <p className="text-rose-600 text-xs mt-1.5">{errors.titulo}</p>}
+                </div>
+                
+                <div className="flex justify-end space-x-3 pt-4 border-t border-slate-100">
+                    <button
+                        type="button"
+                        onClick={onCancel}
+                        className="px-4 py-2.5 border border-slate-300 rounded-lg text-slate-700 font-medium hover:bg-slate-50 transition-colors text-sm"
+                    >
+                        Cancelar
+                    </button>
+                    <button
+                        type="submit"
+                        disabled={loading}
+                        className="px-5 py-2.5 bg-indigo-600 text-white font-medium rounded-lg hover:bg-indigo-700 disabled:opacity-50 shadow-sm transition-colors text-sm"
+                    >
+                        {loading ? 'Salvando...' : 'Salvar Projeto'}
+                    </button>
+                </div>
+            </form>
+        </div>
     );
 };
 export default ProjectForm;

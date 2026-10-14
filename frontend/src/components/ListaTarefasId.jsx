@@ -37,40 +37,72 @@ function ListaTarefasId({projeto, onBack, onCreateTask, onEditTask}) {
     }
   } ;
 
+  const getPriorityBadge = (prioridade) => {
+    const styles = {
+      Alta: 'bg-rose-50 text-rose-700 border-rose-200',
+      Média: 'bg-amber-50 text-amber-700 border-amber-200',
+      Baixa: 'bg-emerald-50 text-emerald-700 border-emerald-200',
+    };
+    return styles[prioridade] || 'bg-slate-100 text-slate-700 border-slate-200';
+  };
+
   if (loading) return <p>Carregando tarefas...</p>;
   if (erro) return <p style={{ color: 'red' }}>{erro}</p>;
 
   return (
-    <div className="bg-white p-6 rounded-lg shadow-md">
-      <div className="flex justify-between items-center mb-6">
-        <h2 className="text-xl font-bold">Tarefas do Projeto: {projeto.titulo}</h2>
-        <button
-          onClick={onBack}
-          className="px-4 py-2 bg-gray-300 text-gray-700 rounded-md hover:bg-gray-400 text-sm"
-        >
-          Voltar para Projetos
-        </button>
+    <div className="space-y-6">
+      {/* Topo do Projeto */}
+      <div className="bg-white p-6 rounded-xl border border-slate-200 shadow-xs flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+        <div>
+          <span className="text-xs font-semibold text-indigo-600 uppercase tracking-wider">Projeto Atual</span>
+          <h2 className="text-2xl font-bold text-slate-900">{projeto.titulo}</h2>
+        </div>
+        <div className="flex items-center gap-3 w-full sm:w-auto">
+          <button
+            onClick={() => onCreateTask()}
+            className="flex-1 sm:flex-none bg-indigo-600 hover:bg-indigo-700 text-white font-medium px-4 py-2 rounded-lg shadow-sm transition-colors text-sm"
+          >
+            + Nova Tarefa
+          </button>
+          <button
+            onClick={onBack}
+            className="flex-1 sm:flex-none bg-white border border-slate-300 text-slate-700 hover:bg-slate-50 font-medium px-4 py-2 rounded-lg transition-colors text-sm"
+          >
+            Voltar
+          </button>
+        </div>
       </div>
-      <div>
-        <button onClick={() => onCreateTask()}>
-          Nova Tarefa
-        </button>
-      </div>
+
+      {/* Lista de Tarefas */}
       {tarefas.length === 0 ? (
-        <p className="text-gray-500">Nenhuma tarefa cadastrada para este projeto.</p>
+        <div className="bg-white rounded-xl border border-slate-200 p-12 text-center shadow-xs">
+          <p className="text-slate-500">Nenhuma tarefa cadastrada para este projeto.</p>
+        </div>
       ) : (
         <ul className="space-y-3">
           {tarefas.map((tarefa) => (
-            <li key={tarefa.id} className="border p-3 rounded flex justify-between items-center">
-              <div>
-                <p className="font-semibold">Descrição: {tarefa.descricao}</p>
-                <span className="text-xs text-gray-500">Prioridade: {tarefa.prioridade}</span>
+            <li 
+              key={tarefa.id} 
+              className="bg-white p-4 rounded-xl border border-slate-200/80 shadow-xs hover:shadow-md transition-all flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4"
+            >
+              <div className="space-y-1">
+                <p className="font-semibold text-slate-800 text-base">{tarefa.descricao}</p>
+                <span className={`inline-block px-2.5 py-0.5 text-xs font-medium rounded-full border ${getPriorityBadge(tarefa.prioridade)}`}>
+                  {tarefa.prioridade}
+                </span>
               </div>
-              <div>
-                <button onClick={() => onEditTask(tarefa)} className="px-3 py-1 bg-yellow-500 text-white rounded hover:bg-yellow-600 text-sm">
+              
+              <div className="flex items-center gap-2">
+                <button 
+                  onClick={() => onEditTask(tarefa)} 
+                  className="px-3.5 py-1.5 bg-amber-50 hover:bg-amber-100 text-amber-700 font-medium rounded-lg text-sm transition-colors"
+                >
                   Editar
                 </button>
-                <button onClick={() => handleDelete(tarefa.id)} className="px-3 py-1 bg-red-600 text-white rounded hover:bg-red-700 text-sm">
+                <button 
+                  onClick={() => handleDelete(tarefa.id)} 
+                  className="px-3.5 py-1.5 bg-rose-50 hover:bg-rose-100 text-rose-700 font-medium rounded-lg text-sm transition-colors"
+                >
                   Excluir
                 </button>
               </div>

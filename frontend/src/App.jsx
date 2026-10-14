@@ -73,13 +73,21 @@ function App() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-100">
-      <header className="bg-white shadow-sm">
-      </header>
-      <main className="container mx-auto px-4 py-8">
-        <div>
-        {renderContent()}
+    <div className="min-h-screen bg-slate-50 text-slate-800 flex flex-col">
+      {/* Header Moderno */}
+      <header className="bg-white border-b border-slate-200 sticky top-0 z-10 shadow-xs">
+        <div className="max-w-5xl mx-auto px-6 py-4 flex justify-between items-center">
+          <div className="flex items-center space-x-3">
+            <div className="w-9 h-9 bg-indigo-600 rounded-lg flex items-center justify-center text-white font-bold text-lg shadow-sm">
+            </div>
+            <h1 className="text-xl font-bold text-slate-900 tracking-tight">Gerenciador de Projetos</h1>
+          </div>
         </div>
+      </header>
+
+      {/* Conteúdo Principal */}
+      <main className="max-w-5xl w-full mx-auto px-6 py-8 flex-1">
+        {renderContent()}
       </main>
     </div>
   );

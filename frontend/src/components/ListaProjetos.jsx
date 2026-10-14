@@ -38,34 +38,63 @@ function ListaProjetos({onEditProject, onViewTasks, onCreateProject}) {
   if (erro) return <p style={{ color: 'red' }}>{erro}</p>;
 
   return (
-    <div>
-      <h2>Meus Projetos</h2>
-      <div className="container mx-auto px-4 py-4">
-           <button
-              onClick={() => onCreateProject()}
-              className="px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-700"
+    <div className="space-y-6">
+      {/* Cabeçalho da Seção */}
+      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+        <div>
+          <h2 className="text-2xl font-bold text-slate-900">Meus Projetos</h2>
+          <p className="text-sm text-slate-500">Gerencie seus projetos e acompanhe suas tarefas.</p>
+        </div>
+        <button
+          onClick={() => onCreateProject()}
+          className="bg-indigo-600 hover:bg-indigo-700 text-white font-medium px-4 py-2.5 rounded-lg shadow-sm transition-colors flex items-center gap-2 text-sm"
+        >
+          <span>+ Novo Projeto</span>
+        </button>
+      </div>
+
+      {/* Lista ou Estado Vazio */}
+      {projetos.length === 0 ? (
+        <div className="bg-white rounded-xl border border-slate-200 p-12 text-center shadow-xs">
+          <p className="text-slate-500 mb-4">Nenhum projeto encontrado.</p>
+          <button
+            onClick={() => onCreateProject()}
+            className="text-indigo-600 font-medium hover:underline text-sm"
           >
-          Novo Projeto
+            Criar seu primeiro projeto
           </button>
         </div>
-      {projetos.length === 0 ? (
-        <p>Nenhum projeto encontrado.</p>
       ) : (
-        <ul className='space-y-2'>
+        <ul className="grid gap-3">
           {projetos.map((projeto) => (
-            <li key={projeto.id} className='flex justify-between items-center bg-white p-3 shadow rounded'>
-              <b>{projeto.titulo}</b>
-              <div className='space-x-2'>
-                <button onClick={() => onEditProject(projeto)} className="px-3 py-1 bg-yellow-500 text-white rounded hover:bg-yellow-600 text-sm">
-                  Editar
-                </button>
-                <button onClick={() => handleDelete(projeto.id)} className="px-3 py-1 bg-red-600 text-white rounded hover:bg-red-700 text-sm">
-                  Excluir
-                </button>
+            <li 
+              key={projeto.id} 
+              className="bg-white p-5 rounded-xl border border-slate-200/80 shadow-xs hover:shadow-md transition-all flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4"
+            >
+              <div className="flex items-center gap-3">
+                <div className="w-2.5 h-2.5 rounded-full bg-indigo-500"></div>
+                <span className="font-semibold text-slate-800 text-lg">{projeto.titulo}</span>
+              </div>
+              
+              <div className="flex items-center gap-2 w-full sm:w-auto justify-end">
                 <button 
                   onClick={() => onViewTasks(projeto)}
-                  className="px-3 py-1 bg-blue-600 text-white rounded text-sm hover:bg-blue-700"
-                >Tarefas</button>
+                  className="px-3.5 py-1.5 bg-slate-100 hover:bg-slate-200 text-slate-700 font-medium rounded-lg text-sm transition-colors"
+                >
+                  Tarefas
+                </button>
+                <button 
+                  onClick={() => onEditProject(projeto)}
+                  className="px-3.5 py-1.5 bg-amber-50 hover:bg-amber-100 text-amber-700 font-medium rounded-lg text-sm transition-colors"
+                >
+                  Editar
+                </button>
+                <button 
+                  onClick={() => handleDelete(projeto.id)}
+                  className="px-3.5 py-1.5 bg-rose-50 hover:bg-rose-100 text-rose-700 font-medium rounded-lg text-sm transition-colors"
+                >
+                  Excluir
+                </button>
               </div> 
             </li>
           ))}
