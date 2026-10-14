@@ -1,11 +1,13 @@
 import { useState } from 'react';
 import ListaProjetos from './components/ListaProjetos';
 import ProjectForm from './components/ProjectForm';
-import ListaTarefas from './components/ListaTarefas';
+import ListaTarefasId from './components/ListaTarefasId';
+import TaskForm from './components/TaskForm'
 
 function App() {
   const [view, setView] = useState('list');
   const [selectedProject, setSelectedProject] = useState(null);
+  const [selectedTask, setSelectedTask] = useState(null);
 
   const handleCreateProject = () => {
     setSelectedProject(null);
@@ -17,12 +19,15 @@ function App() {
     setView('form') ;
   }
   
-  //WIP
-  /*
   const handleCreateTask = () => {
     setSelectedTask(null);
-    setView('form');
-  }*/
+    setView('taskform');
+  }
+
+  const handleEditTask = (task) => {
+    setSelectedTask(task) ;
+    setView('taskform') ;
+  }
 
   const handleViewTasks = (project) => {
     setSelectedProject(project);
@@ -45,13 +50,22 @@ function App() {
           onCancel={handleCancel}
         /> ;
       case 'tarefas':
-        return <ListaTarefas
+        return <ListaTarefasId
           projeto = {selectedProject} 
           onBack ={() => setView('list')}
+          onCreateTask={handleCreateTask}
+          onEditTask={handleEditTask}
         /> ;
+      case 'taskform':
+        return <TaskForm
+          tarefa = {selectedTask}
+          onSave={handleSave}
+          onCancel={handleCancel}
+        />;
       case 'list':
       default:
-        return <ListaProjetos 
+        return <ListaProjetos
+        onCreateProject={handleCreateProject} 
         onEditProject={handleEditProject}
         onViewTasks={handleViewTasks}
         />;
@@ -61,17 +75,11 @@ function App() {
   return (
     <div className="min-h-screen bg-gray-100">
       <header className="bg-white shadow-sm">
-        <div className="container mx-auto px-4 py-4">
-           <button
-              onClick={handleCreateProject}
-              className="px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-700"
-          >
-          Novo Projeto
-          </button>
-        </div>
       </header>
       <main className="container mx-auto px-4 py-8">
+        <div>
         {renderContent()}
+        </div>
       </main>
     </div>
   );

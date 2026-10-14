@@ -1,7 +1,8 @@
 import { useState, useEffect } from 'react';
-import { projetoService } from '../services/projetoService'; 
+import { tarefaService } from '../services/tarefaService'; 
+import { projetoService } from '../services/projetoService';
 
-function ListaTarefas({projeto, onBack}) {
+function ListaTarefasId({projeto, onBack, onCreateTask, onEditTask}) {
   const [tarefas, setTarefas] = useState([]);
   const [loading, setLoading] = useState(true);
   const [erro, setErro] = useState(null);
@@ -24,6 +25,18 @@ function ListaTarefas({projeto, onBack}) {
     }
   }, [projeto]);
 
+  const handleDelete = async (id) => {
+    if (window.confirm('Tem certeza que deseja excluir esta tarefa?')){
+      try {
+        await tarefaService.deleteTask(id);
+        setTarefas(tarefas.filter(tarefa => tarefa.id !== id));
+      } catch(err){
+        console.error('Não foi possível deletar a tarefa:',err);
+        alert('Não foi possível excluir a tarefa');
+      }
+    }
+  } ;
+
   if (loading) return <p>Carregando tarefas...</p>;
   if (erro) return <p style={{ color: 'red' }}>{erro}</p>;
 
@@ -38,7 +51,11 @@ function ListaTarefas({projeto, onBack}) {
           Voltar para Projetos
         </button>
       </div>
-
+      <div>
+        <button onClick={() => onCreateTask()}>
+          Nova Tarefa
+        </button>
+      </div>
       {tarefas.length === 0 ? (
         <p className="text-gray-500">Nenhuma tarefa cadastrada para este projeto.</p>
       ) : (
@@ -46,8 +63,16 @@ function ListaTarefas({projeto, onBack}) {
           {tarefas.map((tarefa) => (
             <li key={tarefa.id} className="border p-3 rounded flex justify-between items-center">
               <div>
-                <p className="font-semibold">{tarefa.descricao}</p>
+                <p className="font-semibold">Descrição: {tarefa.descricao}</p>
                 <span className="text-xs text-gray-500">Prioridade: {tarefa.prioridade}</span>
+              </div>
+              <div>
+                <button onClick={() => onEditTask(tarefa)} className="px-3 py-1 bg-yellow-500 text-white rounded hover:bg-yellow-600 text-sm">
+                  Editar
+                </button>
+                <button onClick={() => handleDelete(tarefa.id)} className="px-3 py-1 bg-red-600 text-white rounded hover:bg-red-700 text-sm">
+                  Excluir
+                </button>
               </div>
             </li>
           ))}
@@ -57,4 +82,4 @@ function ListaTarefas({projeto, onBack}) {
   );
 }
 
-export default ListaTarefas;
+export default ListaTarefasId;

@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { projetoService } from '../services/projetoService'; 
 
-function ListaProjetos({onEditProject, onViewTasks}) {
+function ListaProjetos({onEditProject, onViewTasks, onCreateProject}) {
   const [projetos, setProjetos] = useState([]);
   const [loading, setLoading] = useState(true);
   const [erro, setErro] = useState(null);
@@ -40,6 +40,14 @@ function ListaProjetos({onEditProject, onViewTasks}) {
   return (
     <div>
       <h2>Meus Projetos</h2>
+      <div className="container mx-auto px-4 py-4">
+           <button
+              onClick={() => onCreateProject()}
+              className="px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-700"
+          >
+          Novo Projeto
+          </button>
+        </div>
       {projetos.length === 0 ? (
         <p>Nenhum projeto encontrado.</p>
       ) : (
